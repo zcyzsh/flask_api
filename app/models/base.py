@@ -1,7 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy,BaseQuery
-from sqlalchemy import Column, SmallInteger, Integer
+from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
+from sqlalchemy import Column, SmallInteger, Integer, String
 from contextlib import contextmanager
 from datetime import datetime
+
+
 class SQLAlchemy(_SQLAlchemy):
     @contextmanager
     def auto_commit(self):
@@ -44,6 +46,8 @@ class Base(db.Model):
            if hasattr(self, key) and key != 'id':
                setattr(self, key, value)
 
+    
+    #定义了此方法 可以通过o['key']来访问实例变量
     def __getitem__(self, item):
         return getattr(self, item)
 
@@ -56,3 +60,4 @@ class Base(db.Model):
 
     def delete(self):
         self.status = 0
+

@@ -1,6 +1,5 @@
 from werkzeug.exceptions import HTTPException
 from flask import request, json
-
 class APIException(HTTPException):
     # 这个状态码在浏览器中
     code = 500
@@ -17,7 +16,7 @@ class APIException(HTTPException):
             self.code = code
         super(APIException, self).__init__(msg, None)
 
-    def get_body(self, environ=None):
+    def get_body(self, environ=None, scope=None):
         body = dict(
             msg = self.msg,
             error_code = self.error_code,
@@ -25,7 +24,7 @@ class APIException(HTTPException):
         )
         text = json.dumps(body)
         return text
-    def get_headers(self, environ=None):
+    def get_headers(self, environ=None, scope=None):
         return [('Content-Type', 'application/json')]
 
     @staticmethod

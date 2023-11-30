@@ -18,16 +18,16 @@ class Query(BaseQuery):
         if 'status' not in kwargs.keys():
             kwargs['status'] = 1
         return super(Query, self).filter_by(**kwargs)
-    def get_or_404(self, ident):
-        rv = self.get(ident)
-        if not rv:
-            raise NotFound()#apiexception
-        return  rv
-    def first_or_404(self):
-        rv = self.first()
-        if not rv:
-            raise NotFound()#apiexception
-        return  rv
+    # def get_or_404(self, ident):
+    #     rv = self.get(ident)
+    #     if not rv:
+    #         raise NotFound()#apiexception
+    #     return  rv
+    # def first_or_404(self):
+    #     rv = self.first()
+    #     if not rv:
+    #         raise NotFound()#apiexception
+    #     return  rv
 
 db = SQLAlchemy(query_class=Query)
 

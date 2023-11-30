@@ -1,16 +1,21 @@
 from .app import Flask
 from flask.json import jsonify
 
-# from app.models.base import db
-from app.models.user import db
+# ---->please import model package in this section <----#
+from app.models.hotel import Hotel
+
+# ---->please import model package in this section <----#
+
+from app.models.base import db
+
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object('app.secure')
     app.config.from_object('app.setting')
 
-    # db.init_app(app)
-    # db.create_all(app=app)
+    db.init_app(app)
+    db.create_all(app=app)
 
     register_blueprint(app)
 

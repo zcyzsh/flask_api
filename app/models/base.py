@@ -3,7 +3,6 @@ from sqlalchemy import Column, SmallInteger, Integer, String
 from contextlib import contextmanager
 from datetime import datetime
 
-
 class SQLAlchemy(_SQLAlchemy):
     @contextmanager
     def auto_commit(self):

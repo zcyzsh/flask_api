@@ -1,6 +1,7 @@
 from app.libs.redprint import Redprint
 from app.models.hotel import Hotel
 from app.models.base import db
+from flask.json import jsonify
 
 api = Redprint('hotel')
 
@@ -26,4 +27,4 @@ def set_hotel():
 @api.route('/search', methods=['GET'])
 def search_hotel():
     hotel = Hotel.query.filter_by(id=1).first()
-    return hotel.comments
+    return jsonify(hotel)

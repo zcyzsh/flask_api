@@ -9,3 +9,6 @@ class Hotel(Base):
     description = Column(String(600))
     src = Column(String(100))
     comments = Column(String(1000))
+
+    def keys(self):
+        return ['price', 'location']#specify the attributions you want to jsonify

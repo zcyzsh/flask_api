@@ -34,7 +34,12 @@
 
    即在hotel.py当中添加以下代码
 
-   ![image-20231130153113414](https://sonydxs.oss-cn-shanghai.aliyuncs.com/202311301531463.png)
+   ```python
+   from app.libs.redprint import Redprint
+   api = Redprint('hotel')
+   ```
+
+   
 
 2. **请将实例化后的Reprint对象注册到上层Blueprint对象中**
 
@@ -42,7 +47,12 @@
 
 ​		即在v1/\_\__init\_\_文件当中指定区域添加代码
 
-![image-20231130212117909](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231130212117909.png)
+```python
+ #---->please add register code in this section <----#
+    hotel.api.register(bp_v1)
+
+ #---->please add register code in this section <----#
+```
 
 ​		若添加新模块，需要在该文件当中导入相应的包
 
@@ -50,13 +60,18 @@
 
 3.  **请根据对资源的请求动作设计url**
 
-​         如获取hotel信息，那他的动作是get,故url为"\v1\hotel\get"(蓝图层的'v1'(构建Blueprint时传入)，红图层的'hotel'(构建Redprint时传入),请求动作'get')
+  如获取hotel信息，那他的动作是get,故url为"\v1\hotel\get"(蓝图层的'v1'(构建Blueprint时传入)，红图层的'hotel'(构建Redprint时传入),请求动作'get')
 
-​         视图函数和url的绑定方式如下
+  视图函数和url的绑定方式如下
 
-![image-20231130153938842](https://sonydxs.oss-cn-shanghai.aliyuncs.com/202311301539207.png)
+```python
+@api.route('/get', methods=['GET'])
+def get_hotel():
+    return 'hotel!!!'
+```
 
-​		  路由绑定涉及到python装饰器语法，较为复杂，不做讲解，会用即可
+
+  路由绑定涉及到python装饰器语法，较为复杂，不做讲解，会用即可
 
 ## 2、数据库的映射与查询
 
@@ -174,13 +189,30 @@ SQLALCHEMY_DATABASE_URI = ('mysql+pymysql://root:123456@localhost:3306/Hotel')
 
   导入的位置是app\\_\_init\_\_.py文件的首部（已指定了位置）
 
-  ![image-20231130202955195](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231130202955195.png)
+```python
+# ---->please import model package in this section <----#
+from app.models.hotel import Hotel
+
+# ---->please import model package in this section <----#
+```
 
 #### 数据项的插入
 
   将数据项的插入操作放到视图函数中进行实验
 
-  ![image-20231130204819885](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231130204819885.png)
+```python
+@api.route('/set', methods=['GET'])
+def set_hotel():
+    hotel = Hotel()
+    with db.auto_commit():
+        hotel.price = 348
+        hotel.location = '南京'
+        hotel.description = '位于6朝古都的南京'
+        hotel.src = '如家'
+        hotel.comments = '舒服的一次住宿'
+        db.session.add(hotel)
+    return 'hotel saved in db'
+```
 
   使用postman访问该url时，才进行数据插入
 
@@ -212,10 +244,14 @@ SQLALCHEMY_DATABASE_URI = ('mysql+pymysql://root:123456@localhost:3306/Hotel')
 
 #### 数据库的查询
 
-
   同样的编写视图函数进行讲解
 
-  ![image-20231130211416444](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231130211416444.png)
+```python
+@api.route('/search', methods=['GET'])
+def search_hotel():
+    hotel = Hotel.query.filter_by(id=1).first()
+    return hotel.comments
+```
 
   可以发现查询操作是**定义成模型类的类方法**  ，类名指定了要查询的表
 
@@ -227,9 +263,52 @@ SQLALCHEMY_DATABASE_URI = ('mysql+pymysql://root:123456@localhost:3306/Hotel')
 
   有关查询操作，sqlcemy给出了很多api，可查看sqlchemy的api文档进行使用
 
-
-
 ## 3、模型序列化的使用方式
+
+  因为搭建的是api接口框架，故希望每次返回的都是json格式的数据
+
+  对象的序列化比较复杂，笔者进行了相应的封装，便于大家使用
+
+  #### 使用方式
+
+1. 请在需要使用序列化函数的文件首部先导入jsonify
+
+   ```python
+   from flask.json import jsonify
+   ```
+
+2. 请在类当中指明需要进行序列化的属性，即定义keys函数，并指明想要序列化的属性，哪怕只有一个也**一定要以列表形式返回**
+
+   以Hotel类为例：
+
+   ```python
+   class Hotel(Base):
+       __tablename__ = 'hotel'
+       id = Column(Integer, primary_key=True, autoincrement=True)
+       price = Column(Integer)
+       location = Column(String(100))
+       description = Column(String(600))
+       src = Column(String(100))
+       comments = Column(String(1000))
+   
+       def keys(self):
+           return ['price', 'location']#specify the attributions you want to jsonify
+   ```
+
+   编写视图函数进行测试
+
+   ```python
+   @api.route('/search', methods=['GET'])
+   def search_hotel():
+       hotel = Hotel.query.filter_by(id=1).first()
+       return jsonify(hotel)
+   ```
+   
+   以下是postman的实验
+   
+   ![image-20231201112113829](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231201112113829.png)
+   
+   果然只序列化了指定的属性
 
 ## 4、视图层使用推荐
 

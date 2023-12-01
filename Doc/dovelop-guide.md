@@ -1,6 +1,6 @@
 # flask-api 使用手册
 
-![image-20231130134400657](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231130134400657.png)
+![image-20231201161801488](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231201161801488.png)
 
   *此项目是笔者从之前项目中精简而来，旨在方便开发者简单开启后端接口服务*
 
@@ -376,6 +376,6 @@ def search_hotel():
 
 ## 7、爬虫函数编写
 
-  接口的开发有时会需要调用别人的api，或者需要自己编写爬虫进行数据爬取
+  接口的开发有时需要调用别人的api，或者需要自己编写爬虫进行数据爬取
 
   请将爬虫代码写到app\spider文件夹中

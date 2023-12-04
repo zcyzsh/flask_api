@@ -6,7 +6,23 @@
 
   *代码设计思想与文件管理方式源于MVC+RESTful*
 
-  以下为项目代码组织结构，之后会一一讲解
+
+
+## 安装流程：
+1. 请指定python版本 3.6.13
+2. 
+   * 可使用Anaconda下载相应的包，包的版本在PipFile里面（版本号要一致）
+   * 也可以使用pipenv进行下载（可使用pipenv install直接下载 因为包的版本已在Pipfile中指定）
+
+3. 遇到以下情况，请更新sqlalchemy==1.3.0
+   ![image-20231204122554194](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231204122554194.png)
+
+4. 遇到一下情况，请安装cryptography
+    ![image-20231204123042528](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231204123042528.png)
+
+  ## 代码结构
+
+以下为项目代码组织结构，之后会一一讲解
 
 ![image-20231130151337903](https://sonydxs.oss-cn-shanghai.aliyuncs.com/202311301513256.png)
 
@@ -261,7 +277,7 @@ def search_hotel():
 
   
 
-  有关查询操作，sqlcemy给出了很多api，可查看sqlchemy的api文档进行使用
+  有关查询操作，sqlalchemy给出了很多api，可查看sqlalchemy的api文档进行使用
 
 ## 3、模型序列化的使用方式
 

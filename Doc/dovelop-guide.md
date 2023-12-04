@@ -395,3 +395,7 @@ def search_hotel():
   接口的开发有时需要调用别人的api，或者需要自己编写爬虫进行数据爬取
 
   请将爬虫代码写到app\spider文件夹中
+
+## 启动方式
+
+项目入口文件是flask_api/api_serve.py，在此启动项目即可

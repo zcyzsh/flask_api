@@ -17,7 +17,7 @@
 3. 遇到以下情况，请更新sqlalchemy==1.3.0
    ![image-20231204122554194](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231204122554194.png)
 
-4. 遇到一下情况，请安装cryptography
+4. 遇到以下情况，请安装cryptography
     ![image-20231204123042528](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231204123042528.png)
 
   ## 代码结构
@@ -199,7 +199,7 @@ SQLALCHEMY_DATABASE_URI = ('mysql+pymysql://root:123456@localhost:3306/Hotel')
 6. 3306：数据库服务的端口号
 7. Hotel: 数据库名
 
-  参考以上实例，可以在\secure.py中进行数据库连接到配置
+  参考以上实例，可以在\secure.py中进行数据库连接配置
 
   需要注意的是，为保证数据库中表的正确映射，请在指定区域导入相应包（*会用即可，有空可琢磨一下为什么*）
 
@@ -293,7 +293,7 @@ def search_hotel():
    from flask.json import jsonify
    ```
 
-2. 请在类当中指明需要进行序列化的属性，即定义keys函数，并指明想要序列化的属性，哪怕只有一个也**一定要以列表形式返回**
+2. 请在模型类当中指明需要进行序列化的属性，即定义keys函数，并指明想要序列化的属性，哪怕只有一个也**一定要以列表形式返回**
 
    以Hotel类为例：
 
@@ -354,7 +354,7 @@ def search_hotel():
 
 1. 请从app\libs\error.py 导入 APIException
 
-2. 在定义自己的异常类，并继承APIException
+2. 定义自己的异常类，并继承APIException
 
    ```python
    class Error(APIException):

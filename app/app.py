@@ -1,5 +1,6 @@
 from flask import Flask as _Flask
 from flask.json import JSONEncoder as _JSONEncoder
+from app.libs.error_code import Error
 
 class JSONEncoder(_JSONEncoder):
     def default(self, o):

@@ -1,4 +1,4 @@
-# flask-api 使用手册  测试不用加速器能不能连接github
+# flask-api 使用手册  
 
 ![image-20231201161801488](http://sonydxs.oss-cn-shanghai.aliyuncs.com/img/image-20231201161801488.png)
 
